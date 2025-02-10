@@ -1,4 +1,4 @@
-import { GOOGLE_ID, GOOGLE_SECRET } from '../../../../utils/secrets';
+import { GOOGLE_ID, GOOGLE_SECRET, SECRET } from '../../../../utils/secrets';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import axios from 'axios';
@@ -41,18 +41,17 @@ export const authOptions = {
           console.log('error', e);
         }
       }
-      console.log('tokenZok3amti123', token);
 
       return token;
     },
-    async session({ session, token: data }) {
-      if (data) {
-        session.user = data.user;
+    async session({ session, token }) {
+      if (token) {
+        session = { ...session, ...token };
       }
-
-      return { ...session, ...data };
+      return session;
     },
   },
+  secret: SECRET,
   session: {
     strategy: 'jwt',
   },

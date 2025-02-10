@@ -21,12 +21,13 @@ model User {
   posts     Post[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 model Post {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
+  title     String
   content   String
   image     String?
   author    User     @relation(fields: [authorId], references: [id])
